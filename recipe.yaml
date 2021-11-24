@@ -1,0 +1,49 @@
+RecipeFormatVersion: 2020-01-25
+ComponentName: community.greengrass.nodered.auth
+ComponentVersion: 1.0.0
+ComponentDescription: A component to enable username/password authentication for Node-RED
+ComponentPublisher: Amazon Web Services
+ComponentDependencies: 
+  community.greengrass.SecretsManagerClient:
+    VersionRequirement: ">0.0.0"
+ComponentConfiguration:
+  DefaultConfiguration:
+    username: "none"
+    accessControl:
+      aws.greengrass.SecretManager:
+        community.greengrass.nodered.auth-1: 
+          operations:
+          - aws.greengrass#GetSecretValue
+          resources: 
+          - "*"
+Manifests:
+  - Platform:
+      os: /linux/
+      architecture: /x86|aarch64|amd64|arm/
+    Lifecycle:
+      Startup:
+        Script: |-
+          rm auth.js
+          touch auth.js
+          if [ ! "{configuration:/username}" = "none" ]
+          then
+          if [ ! -f package.json ]
+          then
+            npm init -y
+          fi
+          npm install bcryptjs
+          PWD=$(java -jar {community.greengrass.SecretsManagerClient:artifacts:path}/secrets.jar community.greengrass.nodered/{configuration:/username})
+          HASH=$(node -e "const hash=require('bcryptjs').hashSync(process.argv[1], 8);console.log(hash);" $PWD)
+          echo $HASH
+          cat > auth.js <<EOF
+              adminAuth: {
+                type: "credentials",
+                users: [{
+                    username: "{configuration:/username}",
+                    password: "$HASH",
+                    permissions: "*"
+                }]
+              },
+          EOF
+          fi
+      
