@@ -1,6 +1,6 @@
 {
     "component": {
-        "community.greengrass.nodered-auth": {
+        "aws.greengrass.labs.nodered.auth": {
         "version": "1.0.0",
         "author": "Amazon Web Services",
         "build": {
