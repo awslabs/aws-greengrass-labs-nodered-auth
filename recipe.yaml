@@ -32,7 +32,7 @@ Manifests:
             npm init -y
           fi
           npm install bcryptjs
-          PWD=$(java -jar {aws.greengrass.labs.SecretsManagerClient:artifacts:path}/secrets.jar community.greengrass.nodered/{configuration:/username})
+          PWD=$(java -jar {aws.greengrass.labs.SecretsManagerClient:artifacts:path}/secrets.jar aws.greengrass.labs.nodered/{configuration:/username})
           HASH=$(node -e "const hash=require('bcryptjs').hashSync(process.argv[1], 8);console.log(hash);" $PWD)
           echo $HASH
           cat > auth.js <<EOF

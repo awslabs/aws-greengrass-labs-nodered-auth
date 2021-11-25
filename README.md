@@ -1,15 +1,15 @@
-# community.greengrass.nodered.auth
+# aws.greengrass.labs.nodered.auth
 
 This component is is used to define the authentication mechanism for the Node-RED components.
 
-To specify a new username and password you need to create a secret in AWS Secrets Manager with name `community.greengrass.nodered/<username>` and with the password as plain text value.
+To specify a new username and password you need to create a secret in AWS Secrets Manager with name `aws.greengrass.labs.nodered/<username>` and with the password as plain text value.
 
 You also need to add and configure `aws.greengrass.SecretManager` component to the deployment. The configuration specify the secret to synchronize and should include at least the ARN of the secret created for the username.
 
 ```json
 "cloudSecrets": [
     {
-    "arn": "arn:aws:secretsmanager:eu-west-1:12345678901:secret:community.greengrass.nodered/<username>-XXXXXX"
+    "arn": "arn:aws:secretsmanager:eu-west-1:12345678901:secret:aws.greengrass.labs.nodered/<username>-XXXXXX"
     }
 ]
 ```
@@ -50,7 +50,7 @@ When you deploy a component, AWS IoT Greengrass also deploys compatible versions
 |---|---|---|
 | Greengrass nucleus | >=2.0.0 <2.5.0 | Soft |
 | Secret Manager | >=0.0.0 | Hard |
-| community.greengrass.SecretsManagerClient | >=0.0.0 | Soft |
+| aws.greengrass.labs.SecretsManagerClient | >=0.0.0 | Soft |
 
 ## Configuration
 
@@ -67,7 +67,7 @@ This component provides the following configuration parameters that you can cust
 This component uses the following log file:
 
 ```bash
-/greengrass/v2/logs/community.greengrass.nodered.auth.log
+/greengrass/v2/logs/aws.greengrass.labs.nodered.auth.log
 ```
 
 
