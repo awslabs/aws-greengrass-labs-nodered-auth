@@ -8,10 +8,10 @@
             "custom_build_command": ["cp", "recipe.yaml", "greengrass-build/recipes/recipe.yaml"]
         },
         "publish": {
-            "bucket": "<your-bucket-prefix>",
+	"bucket": "<placeholder>",
             "region": "eu-west-1"
         }
     }
     },
-    "gdk_version": "1.0.0"
+    "gdk_version": "1.1.0"
 }
